@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drowsiness Detection System</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" onerror="console.error('Failed to load CSS')">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Fallback inline styles in case CSS fails to load -->
+    <style>
+        body { font-family: Arial, sans-serif; background: #1e3c72; color: white; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .theme-switch { position: fixed; top: 10px; right: 10px; }
+        .theme-btn { background: none; border: none; color: white; cursor: pointer; font-size: 16px; display: flex; align-items: center; gap: 5px; }
+        .dark-theme { background: #121212; color: #f5f5f5; }
+    </style>
+</head>
+<body>
+    <div class="theme-switch">
+        <button id="themeToggle" class="theme-btn">
+            <i class="fas fa-moon"></i>
+            <span>Dark Mode</span>
+        </button>
+    </div>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-eye"></i> Drowsiness Detection System</h1>
+            <p class="tagline">Stay Safe, Stay Awake</p>
+        </header>
+        
+        <main>
+            <div class="video-container">
+                <div class="video-wrapper">
+                    <img id="videoFeed" src="{{ url_for('video_feed') }}" alt="Video Feed" style="display: none;">
+                    <div id="placeholderText" class="placeholder-text">Click Start to begin monitoring</div>
+                </div>
+                <div class="controls">
+                    <button id="startBtn" class="control-btn start"><i class="fas fa-play"></i> Start</button>
+                    <button id="stopBtn" class="control-btn stop" disabled><i class="fas fa-stop"></i> Stop</button>
+                </div>
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span class="status-text">System Ready</span>
+                </div>
+            </div>
+            
+            <div class="info-panel">
+                <h2><i class="fas fa-info-circle"></i> How It Works</h2>
+                <ul>
+                    <li><i class="fas fa-camera"></i> Real-time eye tracking</li>
+                    <li><i class="fas fa-chart-line"></i> Drowsiness detection using EAR</li>
+                    <li><i class="fas fa-volume-up"></i> Audio alerts when drowsy</li>
+                </ul>
+            </div>
+        </main>
+        
+        <footer>
+            <p>&copy; 2024 Drowsiness Detection System | <i class="fas fa-code"></i> with <i class="fas fa-heart"></i></p>
+        </footer>
+    </div>
+    <script>
+        const videoFeed = document.getElementById('videoFeed');
+        const placeholder = document.getElementById('placeholderText');
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const statusText = document.querySelector('.status-text');
+        const statusDot = document.querySelector('.status-dot');
+
+        startBtn.addEventListener('click', () => {
+            videoFeed.style.display = 'block';
+            placeholder.style.display = 'none';
+            videoFeed.src = "{{ url_for('video_feed') }}";
+            startBtn.disabled = true;
+            stopBtn.disabled = false;
+            statusText.textContent = 'Monitoring';
+            statusDot.classList.add('active');
+        });
+
+        stopBtn.addEventListener('click', () => {
+            videoFeed.style.display = 'none';
+            placeholder.style.display = 'block';
+            videoFeed.src = '';
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+            statusText.textContent = 'System Ready';
+            statusDot.classList.remove('active');
+        });
+
+        // Theme switching logic
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const icon = themeToggle.querySelector('i');
+        const text = themeToggle.querySelector('span');
+
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            body.classList.add(savedTheme);
+            updateThemeButton(savedTheme === 'dark-theme');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const isDark = body.classList.toggle('dark-theme');
+            localStorage.setItem('theme', isDark ? 'dark-theme' : '');
+            updateThemeButton(isDark);
+        });
+
+        function updateThemeButton(isDark) {
+            icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+            text.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+        }
+    </script>
+</body>
+</html>
