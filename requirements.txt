@@ -3,7 +3,7 @@ opencv-python
 dlib==19.24.2
 scipy
 pygame==2.5.2
-numpy==1.26.2
+numpy
 Werkzeug==3.0.1
 click==8.1.7
 itsdangerous==2.1.2
