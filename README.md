@@ -21,7 +21,7 @@ A real-time drowsiness detection system built with Python, OpenCV, and dlib. Thi
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/drowsiness_detection.git
+git clone https://github.com/joydeep1007/drowsiness_detection.git
 cd drowsiness_detection
 ```
 
