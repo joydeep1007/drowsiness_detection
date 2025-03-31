@@ -1,7 +1,7 @@
 Flask==3.0.0
 opencv-python
 dlib==19.24.2
-scipy==1.11.4
+scipy
 pygame==2.5.2
 numpy==1.26.2
 Werkzeug==3.0.1
