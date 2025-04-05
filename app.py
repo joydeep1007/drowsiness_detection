@@ -1,14 +1,26 @@
 import os
-from flask import Flask, render_template, Response, send_from_directory
+from flask import Flask, render_template, Response, send_from_directory, jsonify, request
 import cv2
 import dlib
-from scipy.spatial import distance as dist
 import pygame
-from drowsiness_detection import eye_aspect_ratio, play_alarm
+from scipy.spatial import distance as dist
+from drowsiness_detection import eye_aspect_ratio, play_alarm, init_sound_system
 
 # Update the static folder path to be absolute
 static_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
 app = Flask(__name__, static_folder=static_folder)
+
+# Initialize pygame before sound system
+pygame.init()
+init_sound_system()
+
+# Add settings storage
+app_settings = {
+    'alertSound': 'beep',
+    'volume': 80,
+    'earThreshold': 0.25,
+    'frameThreshold': 20
+}
 
 # Add this route for debugging static files
 @app.route('/static/<path:filename>')
@@ -19,21 +31,15 @@ def custom_static(filename):
         print(f"Error serving static file: {e}")
         return str(e), 404
 
-# Initialize pygame for sound
-pygame.mixer.init()
-pygame.mixer.music.load("music.wav")
-
 # Initialize face detector and predictor
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
 
 # Constants
-EAR_THRESHOLD = 0.25
-FRAME_THRESHOLD = 20
 frame_count = 0
 
 def generate_frames():
-    global frame_count
+    global frame_count, app_settings
     cap = cv2.VideoCapture(0)
     
     try:
@@ -75,13 +81,13 @@ def generate_frames():
                     for (x, y) in left_eye + right_eye:
                         cv2.circle(frame, (x, y), 2, (0, 255, 0), -1)
                     
-                    # Drowsiness detection logic
-                    if ear < EAR_THRESHOLD:
+                    # Drowsiness detection logic using custom settings
+                    if ear < float(app_settings['earThreshold']):
                         frame_count += 1
-                        if frame_count >= FRAME_THRESHOLD:
+                        if frame_count >= int(app_settings['frameThreshold']):
                             cv2.putText(frame, "DROWSINESS ALERT!", (50, 100),
                                       cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 0, 255), 2)
-                            play_alarm()
+                            play_alarm(app_settings['alertSound'])
                     else:
                         frame_count = 0
                         
@@ -110,6 +116,18 @@ def index():
 def video_feed():
     return Response(generate_frames(),
                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/settings')
+def settings_page():
+    return render_template('settings.html')
+
+@app.route('/api/settings', methods=['GET', 'POST'])
+def handle_settings():
+    global app_settings
+    if request.method == 'POST':
+        app_settings.update(request.json)
+        return jsonify({'status': 'success'})
+    return jsonify(app_settings)
 
 if __name__ == '__main__':
     print(f"Static folder path: {app.static_folder}")

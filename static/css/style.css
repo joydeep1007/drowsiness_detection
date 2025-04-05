@@ -205,6 +205,24 @@ header h1 {
     color: white;
 }
 
+.control-btn.settings {
+    background-color: #4a90e2;
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.control-btn.settings:hover {
+    background-color: #357abd;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.5);
+}
+
+.control-btn.settings i {
+    color: rgba(255, 255, 255, 0.9);
+}
+
 .control-btn:hover:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);

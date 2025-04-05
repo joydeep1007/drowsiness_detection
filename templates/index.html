@@ -37,6 +37,9 @@
                 <div class="controls">
                     <button id="startBtn" class="control-btn start"><i class="fas fa-play"></i> Start</button>
                     <button id="stopBtn" class="control-btn stop" disabled><i class="fas fa-stop"></i> Stop</button>
+                    <a href="{{ url_for('settings_page') }}" class="control-btn settings">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
                 </div>
                 <div class="status-indicator">
                     <span class="status-dot"></span>
