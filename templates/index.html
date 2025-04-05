@@ -40,6 +40,9 @@
                     <a href="{{ url_for('settings_page') }}" class="control-btn settings">
                         <i class="fas fa-cog"></i> Settings
                     </a>
+                    <a href="{{ url_for('statistics_page') }}" class="control-btn settings">
+                        <i class="fas fa-chart-bar"></i> Statistics
+                    </a>
                 </div>
                 <div class="status-indicator">
                     <span class="status-dot"></span>
@@ -69,24 +72,48 @@
         const statusText = document.querySelector('.status-text');
         const statusDot = document.querySelector('.status-dot');
 
-        startBtn.addEventListener('click', () => {
-            videoFeed.style.display = 'block';
-            placeholder.style.display = 'none';
-            videoFeed.src = "{{ url_for('video_feed') }}";
-            startBtn.disabled = true;
-            stopBtn.disabled = false;
-            statusText.textContent = 'Monitoring';
-            statusDot.classList.add('active');
+        startBtn.addEventListener('click', async () => {
+            try {
+                const response = await fetch('/toggle_detection', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ state: true })
+                });
+                if (response.ok) {
+                    videoFeed.style.display = 'block';
+                    placeholder.style.display = 'none';
+                    startBtn.disabled = true;
+                    stopBtn.disabled = false;
+                    statusText.textContent = 'Monitoring';
+                    statusDot.classList.add('active');
+                }
+            } catch (error) {
+                console.error('Error starting detection:', error);
+            }
         });
 
-        stopBtn.addEventListener('click', () => {
-            videoFeed.style.display = 'none';
-            placeholder.style.display = 'block';
-            videoFeed.src = '';
-            startBtn.disabled = false;
-            stopBtn.disabled = true;
-            statusText.textContent = 'System Ready';
-            statusDot.classList.remove('active');
+        stopBtn.addEventListener('click', async () => {
+            try {
+                const response = await fetch('/toggle_detection', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ state: false })
+                });
+                if (response.ok) {
+                    videoFeed.style.display = 'none';
+                    placeholder.style.display = 'block';
+                    startBtn.disabled = false;
+                    stopBtn.disabled = true;
+                    statusText.textContent = 'System Ready';
+                    statusDot.classList.remove('active');
+                }
+            } catch (error) {
+                console.error('Error stopping detection:', error);
+            }
         });
 
         // Theme switching logic

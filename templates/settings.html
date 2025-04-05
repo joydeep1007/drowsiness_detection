@@ -56,9 +56,11 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="control-btn start">
-                        <i class="fas fa-save"></i> Save Settings
-                    </button>
+                    <div class="save-button-container">
+                        <button type="submit" class="control-btn save">
+                            <i class="fas fa-save"></i> Save
+                        </button>
+                    </div>
                 </form>
             </div>
         </main>
@@ -136,6 +138,28 @@
             background-position: right 10px center;
             background-size: 16px;
             padding-right: 40px;
+        }
+
+        /* Add new styles for centered save button */
+        .save-button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .control-btn.save {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            min-width: 120px;
+            max-width: 200px;
+        }
+
+        .control-btn.save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
         }
     </style>
 
