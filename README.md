@@ -88,3 +88,21 @@ Adjust these parameters in `drowsiness_detection.py`:
 EAR_THRESHOLD = 0.25  # Eye Aspect Ratio threshold
 FRAME_THRESHOLD = 20  # Consecutive frames for alert
 ```
+
+## Potential Improvements
+
+- Implementing head pose estimation for enhanced drowsiness detection.
+- Adding support for mobile devices using a responsive web interface.
+- Integrating with IoT devices for real-time alerts in vehicles.
+- Using machine learning models for more accurate drowsiness detection.
+
+## Contributions
+
+Contributions are welcome! If you have ideas for new features or improvements, feel free to fork the repository and submit a pull request. Please ensure your code follows the project's coding standards.
+
+## Acknowledgments
+
+- [dlib](http://dlib.net/) for providing the facial landmark detection library.
+- OpenCV for real-time computer vision capabilities.
+- Flask for the lightweight web framework.
+- Community contributors for their valuable feedback and suggestions.
