@@ -1,8 +1,0 @@
-services:
-  - type: web
-    name: drowsiness-detector
-    env: docker
-    region: singapore  # or pick your closest region like frankfurt, singapore, etc.
-    plan: free
-    dockerfilePath: ./Dockerfile
-    autoDeploy: true
