@@ -20,7 +20,8 @@ app_settings = {
     'alertSound': 'beep',
     'volume': 80,
     'earThreshold': 0.25,
-    'frameThreshold': 20
+    'frameThreshold': 20,
+    'alertMessage': 'DROWSINESS ALERT!'  # Add this line
 }
 
 # Add global detection state
@@ -102,7 +103,7 @@ def generate_frames():
                         is_drowsy = detection_state.update(ear, float(app_settings['earThreshold']))
                         
                         if is_drowsy and detection_state.frame_count >= int(app_settings['frameThreshold']):
-                            cv2.putText(frame, "DROWSINESS ALERT!", (50, 100),
+                            cv2.putText(frame, app_settings['alertMessage'], (50, 100),
                                       cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 0, 255), 2)
                             play_alarm(app_settings['alertSound'])
                         

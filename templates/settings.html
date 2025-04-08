@@ -28,6 +28,14 @@
                     <div class="settings-group">
                         <h2><i class="fas fa-volume-up"></i> Alert Settings</h2>
                         <div class="setting-item">
+                            <label for="alertMessage">Alert Message:</label>
+                            <input type="text" id="alertMessage" class="control-input" 
+                                placeholder="DROWSINESS ALERT!" 
+                                maxlength="30">
+                            <small style="color: var(--accent-color);">Message shown when drowsiness is detected (max 30 chars)</small>
+                        </div>
+                        
+                        <div class="setting-item">
                             <label for="alertSound">Alert Sound Type:</label>
                             <select id="alertSound" class="control-input">
                                 <option value="beep">Beep</option>
@@ -114,11 +122,18 @@
             font-size: 1em;
             cursor: pointer;
             border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
         }
 
+        .setting-item select option:hover {
+            background-color: var(--accent-color) !important;
+            color: var(--primary-color) !important;
+        }
+
+        /* Remove the checked state highlighting */
         .setting-item select option:checked {
-            background-color: var(--accent-color);
-            color: var(--primary-color);
+            background-color: var(--secondary-color);
+            color: var(--text-color);
         }
 
         .setting-item select:focus {
@@ -197,6 +212,7 @@
         document.getElementById('settingsForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const formData = {
+                alertMessage: document.getElementById('alertMessage').value,
                 alertSound: document.getElementById('alertSound').value,
                 volume: parseInt(document.getElementById('volume').value),
                 earThreshold: parseFloat(document.getElementById('earThreshold').value),
@@ -227,6 +243,7 @@
                 const response = await fetch('/api/settings');
                 const settings = await response.json();
                 
+                document.getElementById('alertMessage').value = settings.alertMessage;
                 document.getElementById('alertSound').value = settings.alertSound;
                 document.getElementById('volume').value = settings.volume;
                 document.getElementById('earThreshold').value = settings.earThreshold;
