@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drowsiness Detection System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .hero-bg { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold text-blue-600">Drowz Alert</div>
+                <div class="space-x-8">
+                    <a href="#features" class="text-gray-600 hover:text-blue-600">Features</a>
+                    <a href="#how-it-works" class="text-gray-600 hover:text-blue-600">How It Works</a>
+                    <a href="#contact" class="text-gray-600 hover:text-blue-600">Contact</a>
+                    <a href="{{ url_for('index') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg text-white pt-24 pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6">Stay Alert, Stay Safe</h1>
+                    <p class="text-lg mb-8">Advanced drowsiness detection technology to keep drivers and operators safe with real-time monitoring and alerts.</p>
+                    <a href="{{ url_for('index') }}" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 inline-block">Get Started</a>
+                </div>
+                <div class="relative">
+                    <img src="{{ url_for('static', filename='images/hero-image.png') }}" alt="Drowsiness Detection" class="rounded-lg shadow-xl w-full h-auto">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12">Key Features</h2>
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md hover:transform hover:-translate-y-2 transition-transform duration-300">
+                    <div class="text-blue-600 text-4xl mb-4">👁️</div>
+                    <h3 class="text-xl font-semibold mb-2">Eye Tracking</h3>
+                    <p class="text-gray-600">Real-time EAR (Eye Aspect Ratio) monitoring with facial landmark detection.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md hover:transform hover:-translate-y-2 transition-transform duration-300">
+                    <div class="text-blue-600 text-4xl mb-4">🔔</div>
+                    <h3 class="text-xl font-semibold mb-2">Customizable Alerts</h3>
+                    <p class="text-gray-600">Choose between beep, alarm, or voice alerts with adjustable volume and custom messages.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md hover:transform hover:-translate-y-2 transition-transform duration-300">
+                    <div class="text-blue-600 text-4xl mb-4">📊</div>
+                    <h3 class="text-xl font-semibold mb-2">Statistics Dashboard</h3>
+                    <p class="text-gray-600">Track drowsiness patterns, alert frequency, and session duration in real-time.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md hover:transform hover:-translate-y-2 transition-transform duration-300">
+                    <div class="text-blue-600 text-4xl mb-4">🎨</div>
+                    <h3 class="text-xl font-semibold mb-2">Dark/Light Mode</h3>
+                    <p class="text-gray-600">Customizable interface theme for comfortable viewing in any lighting condition.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12">How It Works</h2>
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">1</div>
+                    <h3 class="text-xl font-semibold mb-2">Facial Detection</h3>
+                    <p class="text-gray-600">Uses dlib's frontal face detector to locate faces in real-time video feed.</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">2</div>
+                    <h3 class="text-xl font-semibold mb-2">Landmark Detection</h3>
+                    <p class="text-gray-600">Identifies 68 facial landmarks to precisely locate eye regions using shape predictor.</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">3</div>
+                    <h3 class="text-xl font-semibold mb-2">EAR Calculation</h3>
+                    <p class="text-gray-600">Computes Eye Aspect Ratio to detect eye closure patterns indicating drowsiness.</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">4</div>
+                    <h3 class="text-xl font-semibold mb-2">Alert System</h3>
+                    <p class="text-gray-600">Triggers customizable audio and visual alerts when drowsiness is detected.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="bg-blue-600 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-6">Ready to Enhance Your Safety?</h2>
+            <p class="text-lg mb-8">Click on Get Started Now</p>
+            <a href="{{ url_for('index') }}" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 inline-block">Get Started Now</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-gray-800 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Drowz Alert</h3>
+                    <p>Keeping you safe, one alert at a time.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#features" class="hover:text-blue-400">Features</a></li>
+                        <li><a href="#how-it-works" class="hover:text-blue-400">How It Works</a></li>
+                        <li><a href="#contact" class="hover:text-blue-400">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Contact Us</h3>
+                    <p>Email: amlagayuser@gmail.com</p>
+                    <p>Phone: +91 62897 42768</p>
+                </div>
+            </div>
+            <div class="mt-8 text-center text-gray-400">
+                <p>&copy; 2025 Drowz Alert. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
