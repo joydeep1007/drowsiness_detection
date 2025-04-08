@@ -25,3 +25,11 @@ env/
 dist/
 build/
 *.egg-info/
+
+# Docker and deployment files (do not track)
+Dockerfile
+.dockerignore
+docker-compose.yml
+render.yaml
+.render/
+deployment/
