@@ -170,6 +170,6 @@ def get_stats():
     return jsonify(detection_state.get_statistics())
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 10000))
+    port = int(os.environ.get('PORT', 5000))
     print(f"Static folder path: {app.static_folder}")
     app.run(host='0.0.0.0', port=port, debug=True)
