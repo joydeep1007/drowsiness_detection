@@ -1,15 +1,26 @@
-# Drowsiness Detection System
+# Drowz Alert - Drowsiness Detection System
 
 A real-time drowsiness detection system built with Python, OpenCV, and dlib. This web application monitors user alertness through webcam feed and provides timely alerts to prevent drowsy driving.
 
 ## Features
 
-- Real-time eye tracking
+- Modern landing page with project overview
+- Real-time eye tracking using facial landmarks
 - Drowsiness detection using Eye Aspect Ratio (EAR)
-- Audio alerts when drowsiness is detected
-- Web interface with live video feed
-- Dark/Light theme toggle
-- Real-time EAR value display
+- Customizable alert system:
+  - Multiple sound options (beep, alarm, voice)
+  - Adjustable volume control
+  - Custom alert messages
+- Interactive web interface with:
+  - Live video feed
+  - Start/Stop controls
+  - Dark/Light theme toggle
+  - Real-time statistics dashboard
+- Settings management:
+  - EAR threshold adjustment
+  - Frame count threshold
+  - Alert customization
+- Responsive design for all screen sizes
 
 ## Prerequisites
 
