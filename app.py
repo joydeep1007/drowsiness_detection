@@ -105,10 +105,10 @@ def generate_frames():
                         
                         # Check if drowsiness is detected but alert not yet active (countdown phase)
                         if is_drowsy and not detection_state.alert_active and detection_state.frame_count > 0:
-                            # Calculate remaining time until alert triggers (3 seconds countdown)
+                            # Calculate remaining time until alert triggers (2 seconds countdown)
                             current_time = time.time()
                             drowsy_duration = current_time - detection_state.drowsy_start_time
-                            remaining_time = max(0, 3.0 - drowsy_duration)
+                            remaining_time = max(0, 2.0 - drowsy_duration)
                             
                             # Display countdown timer on screen
                             cv2.putText(frame, f"Alert in: {remaining_time:.1f}s", (50, 150),

@@ -49,9 +49,9 @@ class DetectionState:
                 
             self.frame_count += 1
             
-            # Only activate alert if drowsy for at least 3 seconds AND frame threshold is met
+            # Only activate alert if drowsy for at least 2 seconds AND frame threshold is met
             drowsy_duration = current_time - self.drowsy_start_time
-            if not self.alert_active and self.frame_count >= 20 and drowsy_duration >= 3.0:
+            if not self.alert_active and self.frame_count >= 20 and drowsy_duration >= 2.0:
                 self.alert_active = True
                 self.alert_start_time = current_time
         else:
