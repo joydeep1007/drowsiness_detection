@@ -1,4 +1,5 @@
 import os
+import time
 from flask import Flask, render_template, Response, send_from_directory, jsonify, request
 import cv2
 import dlib
@@ -102,7 +103,19 @@ def generate_frames():
                         # Updated drowsiness detection using DetectionState
                         is_drowsy = detection_state.update(ear, float(app_settings['earThreshold']))
                         
-                        if is_drowsy and detection_state.frame_count >= int(app_settings['frameThreshold']):
+                        # Check if drowsiness is detected but alert not yet active (countdown phase)
+                        if is_drowsy and not detection_state.alert_active and detection_state.frame_count > 0:
+                            # Calculate remaining time until alert triggers (3 seconds countdown)
+                            current_time = time.time()
+                            drowsy_duration = current_time - detection_state.drowsy_start_time
+                            remaining_time = max(0, 3.0 - drowsy_duration)
+                            
+                            # Display countdown timer on screen
+                            cv2.putText(frame, f"Alert in: {remaining_time:.1f}s", (50, 150),
+                                      cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 0, 255), 2)
+                        
+                        # Check if alert is active (which means the 3-second delay has passed)
+                        if detection_state.alert_active:
                             cv2.putText(frame, app_settings['alertMessage'], (50, 100),
                                       cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 0, 255), 2)
                             play_alarm(app_settings['alertSound'])
